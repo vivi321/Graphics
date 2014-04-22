@@ -182,7 +182,7 @@ def renderCyclops(x,y,z):
         x1 = int((0-z)*(ematrix[0][i]-x)/(ematrix[2][i]-z)+x)
         y1 = int((0-z)*(ematrix[1][i]-y)/(ematrix[2][i]-z)+y)
         x2 = int((0-z)*(ematrix[0][i+1]-x)/(ematrix[2][i+1]-z)+x)
-        y2 = int((0-z)*(ematrix[1][i+1]-y)/(ematrix[2][i+1]-z)+u)
+        y2 = int((0-z)*(ematrix[1][i+1]-y)/(ematrix[2][i+1]-z)+y)
         drawLine(x1,y1,x2,y2)
 
 def renderStereo(xl,yl,zl,xr,yr,zr):
