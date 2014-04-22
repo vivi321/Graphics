@@ -218,11 +218,11 @@ def inputs(i):
         elif x[0] == 'scale':
             scale(float(x[1]),float(x[2]),float(x[3]))
         elif x[0] == 'rotate-x':
-            pass #rotateX(float(x[1]))
+            rotateX(float(x[1]))
         elif x[0] == 'rotate-y':
-            pass #rotateY(float(x[1]))
+            rotateY(float(x[1]))
         elif x[0] == 'rotate-z':
-            pass #rotateZ(float(x[1]))
+            rotateZ(float(x[1]))
         elif x[0] == 'screen':
             screen(float(x[1]),float(x[2]),float(x[3]),float(x[4]))
         elif x[0] == 'pixels':
