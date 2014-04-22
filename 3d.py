@@ -122,8 +122,9 @@ def scale(p,q,r):
     a[2][2] = r
     tmatrix = mult(a,tmatrix)
 
-def rotateX(theta):
+def rotateX(d):
     global tmatrix
+    theta = math.radians(d)
     a = [[1 if y==x else 0 for y in range(4)] for x in range(4)]
     a[1][1] = math.cos(theta)
     a[1][2] = -1*math.sin(theta)
@@ -131,8 +132,9 @@ def rotateX(theta):
     a[2][2] = math.cos(theta)
     tmatrix = mult(a,tmatrix)
     
-def rotateY(theta):
+def rotateY(d):
     global tmatrix
+    theta = math.radians(d)
     a = [[1 if y==x else 0 for y in range(4)] for x in range(4)]
     a[0][0] = math.cos(theta)
     a[0][2] = -1*math.sin(theta)
@@ -140,8 +142,9 @@ def rotateY(theta):
     a[2][2] = math.cos(theta)
     tmatrix = mult(a,tmatrix)
 
-def rotateZ(theta):
+def rotateZ(d):
     global tmatrix
+    theta = math.radians(d)
     a = [[1 if y==x else 0 for y in range(4)] for x in range(4)]
     a[0][0] = math.cos(theta)
     a[0][1] = -1*math.sin(theta)
