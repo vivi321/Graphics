@@ -147,11 +147,11 @@ def transform():
 def renderParallel():
     global pixels
     clearPixels()
-    for i in range(0,len(ematrix),2):
-        x1 = int((pixelx/(s[2]-s[0]))*(ematrix[i][0]-s[0]))
-        y1 = int((pixely/(s[3]-s[1]))*(ematrix[i][1]-s[1]))
-        x2 = int((pixelx/(s[2]-s[0]))*(ematrix[i+1][0]-s[0]))
-        y2 = int((pixely/(s[3]-s[1]))*(ematrix[i+1][1]-s[1]))
+    for i in range(0,len(ematrix[0]),2):
+        x1 = int((pixelx/(s[2]-s[0]))*(ematrix[0][i]-s[0]))
+        y1 = int((pixely/(s[3]-s[1]))*(ematrix[1][i]-s[1]))
+        x2 = int((pixelx/(s[2]-s[0]))*(ematrix[0][i+1]-s[0]))
+        y2 = int((pixely/(s[3]-s[1]))*(ematrix[1][i+1]-s[1]))
         drawLine(x1,y1,x2,y2)
 
 def renderCyclops():
@@ -170,7 +170,7 @@ def clearPixels():
 
 def File(fn):
     f = open(fn, 'w')
-    f.write('P3\n'+str(pixelx)+str(pixely)+'\n255\n')
+    f.write('P3\n'+str(pixelx)+" "+str(pixely)+'\n255\n')
     for x in range(pixelx):
         for y in range(pixely):
             for i in range(3):
