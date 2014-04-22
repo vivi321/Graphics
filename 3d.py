@@ -21,13 +21,25 @@ def drawLine(a,b,c,d):
         for i in range(3):
             pixels[a][b][i] = 255
         return 1
-    x1 = min(a,c)
-    x2 = max(a,c)
-    y1 = min(b,d)
-    y2 = max(b,d)
-    if x2-x1 > y2-y1:
+    if abs(a-c) > abs(b-d):
+        x1 = min(a,c)
+        x2 = max(a,c)
+        if x1 == a:
+            y1 = b
+            y2 = d
+        else:
+            y1 = d
+            y2 = b
         x_major(x1,y1,x2,y2)
     else:
+        y1 = min(b,d)
+        y2 = max(b,d)
+        if y1 == b:
+            x1 = a
+            x2 = c
+        else:
+            x1 = c
+            x2 = a
         y_major(x1,y1,x2,y2)
     return 1
 
