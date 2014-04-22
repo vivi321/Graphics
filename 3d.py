@@ -175,11 +175,19 @@ def renderParallel():
         y2 = int((pixely/(s[3]-s[1]))*(ematrix[1][i+1]-s[1]))
         drawLine(x1,y1,x2,y2)
 
-def renderCyclops():
-    pass
+def renderCyclops(x,y,z):
+    global pixels
+    clearPixels()
+    for i in range(0,len(ematrix[0]),2):
+        x1 = int((0-z)*(ematrix[0][i]-x)/(ematrix[2][i]-z)+x)
+        y1 = int((0-z)*(ematrix[1][i]-y)/(ematrix[2][i]-z)+y)
+        x2 = int((0-z)*(ematrix[0][i+1]-x)/(ematrix[2][i+1]-z)+x)
+        y2 = int((0-z)*(ematrix[1][i+1]-y)/(ematrix[2][i+1]-z)+u)
+        drawLine(x1,y1,x2,y2)
 
-def renderStereo():
-    pass
+def renderStereo(xl,yl,zl,xr,yr,zr):
+    renderCyclops(xl,yl,zl)
+    renderCyclops(xr,yr,zr)
 
 def clearEdges():
     global ematrix
