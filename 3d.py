@@ -44,7 +44,10 @@ def x_major(x1,y1,x2,y2):
         x += 1
         count += delta_y
         if count >= delta_x:
-            y += 1
+            if delta_y > 0:
+                y += 1
+            else:
+                y -= 1
             count -= delta_x
         for i in range(3):
             pixels[x][y][i] = 255
@@ -62,7 +65,10 @@ def y_major(x1,y1,x2,y2):
         y += 1
         count += delta_x
         if count >= delta_y:
-            x += 1
+            if delta_x > 0:
+                x += 1
+            else:
+                x -= 1
             count -= delta_y
         for i in range(3):
             pixels[x][y][i] = 255
