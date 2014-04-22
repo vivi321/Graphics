@@ -54,7 +54,7 @@ def x_major(x1,y1,x2,y2):
         pixels[x][y][i] = 255
     while (x < x2):
         x += 1
-        count += delta_y
+        count += abs(delta_y)
         if count >= delta_x:
             if delta_y > 0:
                 y += 1
@@ -75,7 +75,7 @@ def y_major(x1,y1,x2,y2):
         pixels[x][y][i] = 255
     while (y < y2):
         y += 1
-        count += delta_x
+        count += abs(delta_x)
         if count >= delta_y:
             if delta_x > 0:
                 x += 1
