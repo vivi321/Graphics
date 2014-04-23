@@ -222,7 +222,7 @@ def File(fn):
     for x in range(pixelx):
         for y in range(pixely):
             for i in range(3):
-                f.write(str(pixels[x][y][i])+' ')
+                f.write(str(pixels[y][x][i])+' ')
             f.write('\n')
     f.close()
 
