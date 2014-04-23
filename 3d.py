@@ -180,10 +180,14 @@ def renderCyclops(x,y,z):
     global pixels
     clearPixels()
     for i in range(0,len(ematrix[0]),2):
-        x1 = int((0-z)*(ematrix[0][i]-x)/(ematrix[2][i]-z)+x)
-        y1 = int((0-z)*(ematrix[1][i]-y)/(ematrix[2][i]-z)+y)
-        x2 = int((0-z)*(ematrix[0][i+1]-x)/(ematrix[2][i+1]-z)+x)
-        y2 = int((0-z)*(ematrix[1][i+1]-y)/(ematrix[2][i+1]-z)+y)
+        x1 = (0-z)*(ematrix[0][i]-x)/(ematrix[2][i]-z)+x
+        y1 = (0-z)*(ematrix[1][i]-y)/(ematrix[2][i]-z)+y
+        x2 = (0-z)*(ematrix[0][i+1]-x)/(ematrix[2][i+1]-z)+x
+        y2 = (0-z)*(ematrix[1][i+1]-y)/(ematrix[2][i+1]-z)+y
+        x1 = int((pixelx/(s[2]-s[0]))*(x1-s[0]))
+        y1 = int((pixely/(s[3]-s[1]))*(y1-s[1]))
+        x2 = int((pixelx/(s[2]-s[0]))*(x2-s[0]))
+        y2 = int((pixely/(s[3]-s[1]))*(y2-s[1]))
         drawLine(x1,y1,x2,y2)
 
 def renderStereo(xl,yl,zl,xr,yr,zr):
