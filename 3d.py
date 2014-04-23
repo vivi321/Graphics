@@ -97,11 +97,12 @@ def lines(x1,y1,z1,x2,y2,z2):
     ematrix[3].append(1)
 
 def sphere(r,cx,cy,cz):
-    for phi in range(int(20*math.pi)):
-        for theta in range(int(10*math.pi)):
-            ematrix[0].append(r*math.cos(theta*.1)+cx)
-            ematrix[1].append(r*math.sin(theta*.1)*math.cos(phi*.1)+cy)
-            ematrix[2].append(r*math.sin(theta*.1)*math.sin(phi*.1)+cz)
+    a = math.pi/10
+    for phi in range(21):
+        for theta in range(11):
+            ematrix[0].append(r*math.cos(theta*a)+cx)
+            ematrix[1].append(r*math.sin(theta*a)*math.cos(phi*a)+cy)
+            ematrix[2].append(r*math.sin(theta*a)*math.sin(phi*a)+cz)
             ematrix[3].append(1)
 
 def identity():
