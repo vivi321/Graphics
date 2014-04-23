@@ -6,6 +6,7 @@ pixels = []
 s = []
 pixelx = 0
 pixely = 0
+color = [255,255,255]
 
 def mult(a,b):
     m = [[0 for x in range(len(b[0]))] for y in range(len(a))]
@@ -19,7 +20,7 @@ def drawLine(a,b,c,d):
     global pixels
     if a == c and b == d:
         for i in range(3):
-            pixels[a][b][i] = 255
+            pixels[a][b][i] = color[i]
         return 1
     if abs(a-c) > abs(b-d):
         x1 = min(a,c)
@@ -51,7 +52,7 @@ def x_major(x1,y1,x2,y2):
     y = y1
     count = 0
     for i in range(3):
-        pixels[x][y][i] = 255
+        pixels[x][y][i] = color[i]
     while (x < x2):
         x += 1
         count += abs(delta_y)
@@ -62,7 +63,7 @@ def x_major(x1,y1,x2,y2):
                 y -= 1
             count -= delta_x
         for i in range(3):
-            pixels[x][y][i] = 255
+            pixels[x][y][i] = color[i]
 
 def y_major(x1,y1,x2,y2):
     global pixels
@@ -72,7 +73,7 @@ def y_major(x1,y1,x2,y2):
     y = y1
     count = 0
     for i in range(3):
-        pixels[x][y][i] = 255
+        pixels[x][y][i] = color[i]
     while (y < y2):
         y += 1
         count += abs(delta_x)
@@ -83,7 +84,7 @@ def y_major(x1,y1,x2,y2):
                 x -= 1
             count -= delta_y
         for i in range(3):
-            pixels[x][y][i] = 255
+            pixels[x][y][i] = color[i]
 
 def lines(x1,y1,z1,x2,y2,z2):
     ematrix[0].append(x1)
@@ -96,11 +97,11 @@ def lines(x1,y1,z1,x2,y2,z2):
     ematrix[3].append(1)
 
 def sphere(r,cx,cy,cz):
-    for phi in range(0,2*math.pi,.1):
-        for theta in range(0,math.pi,.1):
-            ematrix.append([r*math.cos(theta)+cx,
-                            r*math.sin(theta)*math.cos(phi)+cy,
-                            r*math.sin(theta)*math.sin(phi)+cz])
+    for phi in range(int(20*math.pi)):
+        for theta in range(int(10*math.pi)):
+            ematrix.append([r*math.cos(theta*.1)+cx,
+                            r*math.sin(theta*.1)*math.cos(phi*.1)+cy,
+                            r*math.sin(theta*.1)*math.sin(phi*.1)+cz])
 
 def identity():
     global tmatrix
@@ -186,9 +187,13 @@ def renderCyclops(x,y,z):
         drawLine(x1,y1,x2,y2)
 
 def renderStereo(xl,yl,zl,xr,yr,zr):
+    global color
+    color = [255,0,0]
     renderCyclops(xl,yl,zl)
+    color = [0,255,255]
     renderCyclops(xr,yr,zr)
-
+    color = [255,255,255]
+    
 def clearEdges():
     global ematrix
     ematrix = [[] for x in range(4)]
