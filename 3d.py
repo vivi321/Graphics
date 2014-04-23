@@ -171,17 +171,16 @@ def screen(x1,y1,x2,y2):
     s = [x1,y1,x2,y2]
 
 def pixel(x,y):
-    global pixelx,pixely
+    global pixelx,pixely,pixels
     pixelx = x
     pixely = y
+    pixels = [[[0,0,0] for i in range(pixelx)] for j in range(pixely)]
 
 def transform():
     global tmatrix, ematrix
     ematrix = mult(tmatrix,ematrix)
 
 def renderParallel():
-    global pixels
-    clearPixels()
     for i in range(0,len(ematrix[0]),2):
         x1 = int((pixelx/(s[2]-s[0]))*(ematrix[0][i]-s[0]))
         y1 = int((pixely/(s[3]-s[1]))*(ematrix[1][i]-s[1]))
@@ -190,8 +189,6 @@ def renderParallel():
         drawLine(x1,y1,x2,y2)
 
 def renderCyclops(x,y,z):
-    global pixels
-    clearPixels()
     for i in range(0,len(ematrix[0]),2):
         x1 = (0-z)*(ematrix[0][i]-x)/(ematrix[2][i]-z)+x
         y1 = (0-z)*(ematrix[1][i]-y)/(ematrix[2][i]-z)+y
