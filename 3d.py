@@ -165,8 +165,8 @@ def boxT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
 def sphere(r,cx,cy,cz):
     a = math.pi/10
     b = len(ematrix[0])
-    for theta in range(11):
-        for phi in range(21):
+    for phi in range(21):
+        for theta in range(11):
             for i in range(2):
                 ematrix[0].append(r*math.cos(theta*a)+cx)
                 ematrix[1].append(r*math.sin(theta*a)*math.cos(phi*a)+cy)
