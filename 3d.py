@@ -157,10 +157,18 @@ def boxT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
     tri = add(tri,box,0)
     tri = add(tri,box,5)
     tri = add(tri,box,4)
-    #to test the triangles
-    print "tri"
+    #testing triangles
+    for i in range(0,len(tri),3):
+        drawTri(tri,i)
+
+def drawTri(tri,n):
     global ematrix
-    ematrix = tri
+    ematrix = add(ematrix,tri,n)
+    ematrix = add(ematrix,tri,n+1)
+    ematrix = add(ematrix,tri,n+1)
+    ematrix = add(ematrix,tri,n+2)
+    ematrix = add(ematrix,tri,n+2)
+    ematrix = add(ematrix,tri,n)
 
 def sphere(r,cx,cy,cz):
     a = math.pi/10
