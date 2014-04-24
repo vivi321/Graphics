@@ -96,11 +96,77 @@ def lines(x1,y1,z1,x2,y2,z2):
     ematrix[3].append(1)
     ematrix[3].append(1)
 
+def add(a,b,n):
+    a[0].append(b[0][n])
+    a[1].append(b[1][n])
+    a[2].append(b[2][n])
+    a[3].append(b[3][n])
+    return a
+
+def boxT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
+    box = [[.5,.5,-.5,-.5,.5,.5,-.5,-.5],
+           [.5,-.5,-.5,.5,.5,-.5,-.5,.5],
+           [.5,.5,.5,.5,-.5,-.5,-.5,-.5],
+           [1,1,1,1,1,1,1,1]]
+    scale(s1,s2,s3)
+    rotateX(r1)
+    rotateY(r2)
+    rotateZ(r3)
+    move(m1,m2,m3)
+    box = mult(tmatrix,box)
+    tri = [[],[],[],[]]
+    #front
+    tri = add(tri,box,0)
+    tri = add(tri,box,3)
+    tri = add(tri,box,1)
+    tri = add(tri,box,3)
+    tri = add(tri,box,2)
+    tri = add(tri,box,1)
+    #left
+    tri = add(tri,box,3)
+    tri = add(tri,box,7)
+    tri = add(tri,box,2)
+    tri = add(tri,box,7)
+    tri = add(tri,box,6)
+    tri = add(tri,box,2)
+    #top
+    tri = add(tri,box,7)
+    tri = add(tri,box,3)
+    tri = add(tri,box,0)
+    tri = add(tri,box,4)
+    tri = add(tri,box,7)
+    tri = add(tri,box,0)
+    #back
+    tri = add(tri,box,4)
+    tri = add(tri,box,6)
+    tri = add(tri,box,7)
+    tri = add(tri,box,6)
+    tri = add(tri,box,4)
+    tri = add(tri,box,5)
+    #bottom
+    tri = add(tri,box,6)
+    tri = add(tri,box,5)
+    tri = add(tri,box,2)
+    tri = add(tri,box,5)
+    tri = add(tri,box,1)
+    tri = add(tri,box,2)
+    #right
+    tri = add(tri,box,5)
+    tri = add(tri,box,0)
+    tri = add(tri,box,1)
+    tri = add(tri,box,0)
+    tri = add(tri,box,5)
+    tri = add(tri,box,4)
+    #to test the triangles
+    print "tri"
+    global ematrix
+    ematrix = tri
+
 def sphere(r,cx,cy,cz):
     a = math.pi/10
     b = len(ematrix[0])
-    for phi in range(21):
-        for theta in range(11):
+    for theta in range(11):
+        for phi in range(21):
             for i in range(2):
                 ematrix[0].append(r*math.cos(theta*a)+cx)
                 ematrix[1].append(r*math.sin(theta*a)*math.cos(phi*a)+cy)
@@ -239,6 +305,8 @@ def inputs(i):
             break
         elif x[0] == 'line':
             lines(float(x[1]),float(x[2]),float(x[3]),float(x[4]),float(x[5]),float(x[6]))
+        elif x[0] == 'box-t':
+            boxT(float(x[1]),float(x[2]),float(x[3]),float(x[4]),float(x[5]),float(x[6]),float(x[7]),float(x[8]),float(x[9]))
         elif x[0] == 'sphere':
             sphere(float(x[1]),float(x[2]),float(x[3]),float(x[4]))
         elif x[0] == 'identity':
