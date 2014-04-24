@@ -158,7 +158,7 @@ def boxT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
     tri = add(tri,box,5)
     tri = add(tri,box,4)
     #testing triangles
-    for i in range(0,len(tri),3):
+    for i in range(0,len(tri[0]),3):
         drawTri(tri,i)
 
 def drawTri(tri,n):
