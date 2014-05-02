@@ -311,7 +311,14 @@ def transform():
     ematrix = mult(tmatrix,ematrix)
 
 def renderParallel():
+    global color
     for i in range(0,len(ematrix[0]),2):
+        if color[0] > 0:
+            color[0] -= 1
+        elif color[1] > 0:
+            color[1] -= 1
+        elif color[2] > 0:
+            color[2] -= 1
         x1 = int((pixelx/(s[2]-s[0]))*(ematrix[0][i]-s[0]))
         y1 = int((pixely/(s[3]-s[1]))*(ematrix[1][i]-s[1]))
         x2 = int((pixelx/(s[2]-s[0]))*(ematrix[0][i+1]-s[0]))
