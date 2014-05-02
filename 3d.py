@@ -108,12 +108,14 @@ def boxT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
            [.5,-.5,-.5,.5,.5,-.5,-.5,.5],
            [.5,.5,.5,.5,-.5,-.5,-.5,-.5],
            [1,1,1,1,1,1,1,1]]
+    identity()
     scale(s1,s2,s3)
     rotateX(r1)
     rotateY(r2)
     rotateZ(r3)
     move(m1,m2,m3)
     box = mult(tmatrix,box)
+    identity()
     tri = [[],[],[],[]]
     #front
     tri = add(tri,box,0)
@@ -163,14 +165,22 @@ def boxT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
 
 def sphereT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
     a = math.pi/10
-    sphere = []
-    tri = []
+    sphere = [[],[],[],[]]
+    tri = [[],[],[],[]]
     for phi in range(21):
         for theta in range(11):
-            sphere[0].append(r*math.cos(theta*a)+cx)
-            sphere[1].append(r*math.sin(theta*a)*math.cos(phi*a)+cy)
-            sphere[2].append(r*math.sin(theta*a)*math.sin(phi*a)+cz)
+            sphere[0].append(.5*math.cos(theta*a))
+            sphere[1].append(.5*math.sin(theta*a)*math.cos(phi*a))
+            sphere[2].append(.5*math.sin(theta*a)*math.sin(phi*a))
             sphere[3].append(1)
+    identity()
+    scale(s1,s2,s3)
+    rotateX(r1)
+    rotateY(r2)
+    rotateZ(r3)
+    move(m1,m2,m3)
+    sphere = mult(tmatrix,sphere)
+    identity()
     l = len(sphere[0])
     for i in range(l):
         tri = add(tri,sphere,i)
@@ -337,6 +347,8 @@ def inputs(i):
             lines(float(x[1]),float(x[2]),float(x[3]),float(x[4]),float(x[5]),float(x[6]))
         elif x[0] == 'box-t':
             boxT(float(x[1]),float(x[2]),float(x[3]),float(x[4]),float(x[5]),float(x[6]),float(x[7]),float(x[8]),float(x[9]))
+        elif x[0] == 'sphere-t':
+            sphereT(float(x[1]),float(x[2]),float(x[3]),float(x[4]),float(x[5]),float(x[6]),float(x[7]),float(x[8]),float(x[9]))
         elif x[0] == 'sphere':
             sphere(float(x[1]),float(x[2]),float(x[3]),float(x[4]))
         elif x[0] == 'identity':
