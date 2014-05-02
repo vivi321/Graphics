@@ -190,7 +190,7 @@ def sphereT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
         tri = add(tri,sphere,(i+12)%l)
         tri = add(tri,sphere,(i+11)%l)
     #testing triangles
-    for i in range(0,l,3):
+    for i in range(0,len(tri[0]),3):
         drawTri(tri,i)
 
 def drawTri(tri,n):
