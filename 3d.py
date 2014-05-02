@@ -316,8 +316,10 @@ def renderParallel():
         if color[0] > 0:
             color[0] -= 1
         elif color[1] > 0:
+            color [0] = 255
             color[1] -= 1
         elif color[2] > 0:
+            color[1] = 255
             color[2] -= 1
         x1 = int((pixelx/(s[2]-s[0]))*(ematrix[0][i]-s[0]))
         y1 = int((pixely/(s[3]-s[1]))*(ematrix[1][i]-s[1]))
