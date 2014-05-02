@@ -208,10 +208,10 @@ def sphereT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
     for i in range(l):
         tri = add(tri,sphere,i)
         tri = add(tri,sphere,(i+1)%l)
-        tri = add(tri,sphere,(i+11)%l)
+        tri = add(tri,sphere,(i+12)%l)
         tri = add(tri,sphere,i)
+        tri = add(tri,sphere,(i+12)%l)
         tri = add(tri,sphere,(i+11)%l)
-        tri = add(tri,sphere,(i+10)%l)
     #testing triangles
     #for i in range(0,len(tri[0]),3):
     #    drawTri(tri,i)
