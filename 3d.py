@@ -122,7 +122,7 @@ def backface(x):
         d[0] = n[0]*view[0]
         d[1] = n[1]*view[1]
         d[2] = n[2]*view[2]
-        if d[0]+d[1]+d[2] <= 0:
+        if d[0]+d[1]+d[2] < 0:
             drawTri(x,i)
 
 def boxT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
@@ -206,17 +206,18 @@ def sphereT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
     identity()
     l = len(sphere[0])
     for i in range(l):
-        tri = add(tri,sphere,i)
-        tri = add(tri,sphere,(i+1)%l)
-        tri = add(tri,sphere,(i+12)%l)
-        tri = add(tri,sphere,i)
-        tri = add(tri,sphere,(i+12)%l)
-        tri = add(tri,sphere,(i+11)%l)
+        if i%11 != 10:
+            tri = add(tri,sphere,i)
+            tri = add(tri,sphere,(i+1)%l)
+            tri = add(tri,sphere,(i+11)%l)
+            tri = add(tri,sphere,i)
+            tri = add(tri,sphere,(i+11)%l)
+            tri = add(tri,sphere,(i+10)%l)
     #testing triangles
     #for i in range(0,len(tri[0]),3):
     #    drawTri(tri,i)
     backface(tri)
-
+    
 def drawTri(tri,n):
     global ematrix
     ematrix = add(ematrix,tri,n)
@@ -311,12 +312,7 @@ def transform():
     ematrix = mult(tmatrix,ematrix)
 
 def renderParallel():
-    global color
     for i in range(0,len(ematrix[0]),2):
-        if color[0] > 0:
-            color[0] -= 10
-        elif color[1] > 0:
-            color [0] = 255
         x1 = int((pixelx/(s[2]-s[0]))*(ematrix[0][i]-s[0]))
         y1 = int((pixely/(s[3]-s[1]))*(ematrix[1][i]-s[1]))
         x2 = int((pixelx/(s[2]-s[0]))*(ematrix[0][i+1]-s[0]))
