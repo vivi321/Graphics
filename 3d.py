@@ -103,6 +103,28 @@ def add(a,b,n):
     a[3].append(b[3][n])
     return a
 
+def backface(x):
+    view = [0,0,-1]
+    a = [0,0,0]
+    b = [0,0,0]
+    n = [0,0,0]
+    d = [0,0,0]
+    for i in range(0,len(x[0]),3):
+        a[0] = x[0][i]-x[0][i+1]
+        a[1] = x[1][i]-x[1][i+1]
+        a[2] = x[2][i]-x[2][i+1]
+        b[0] = x[0][i]-x[0][i+2]
+        b[1] = x[1][i]-x[1][i+2]
+        b[2] = x[2][i]-x[2][i+2]
+        n[0] = a[1]*b[2]-a[2]*b[1]
+        n[1] = a[2]*b[0]-a[0]*b[2]
+        n[2] = a[0]*b[1]-a[1]*b[0]
+        d[0] = n[0]*view[0]
+        d[1] = n[1]*view[1]
+        d[2] = n[2]*view[2]
+        if d[0]+d[1]+d[2] <= 0:
+            drawTri(x,i)
+
 def boxT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
     box = [[.5,.5,-.5,-.5,.5,.5,-.5,-.5],
            [.5,-.5,-.5,.5,.5,-.5,-.5,.5],
@@ -160,8 +182,9 @@ def boxT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
     tri = add(tri,box,5)
     tri = add(tri,box,4)
     #testing triangles
-    for i in range(0,len(tri[0]),3):
-        drawTri(tri,i)
+    #for i in range(0,len(tri[0]),3):
+    #    drawTri(tri,i)
+    backface(tri)
 
 def sphereT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
     a = math.pi/10
@@ -190,8 +213,9 @@ def sphereT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
         tri = add(tri,sphere,(i+12)%l)
         tri = add(tri,sphere,(i+11)%l)
     #testing triangles
-    for i in range(0,len(tri[0]),3):
-        drawTri(tri,i)
+    #for i in range(0,len(tri[0]),3):
+    #    drawTri(tri,i)
+    backface(tri)
 
 def drawTri(tri,n):
     global ematrix
