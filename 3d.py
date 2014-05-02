@@ -161,6 +161,28 @@ def boxT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
     for i in range(0,len(tri[0]),3):
         drawTri(tri,i)
 
+def sphereT(s1,s2,s3,r1,r2,r3,m1,m2,m3):
+    a = math.pi/10
+    sphere = []
+    tri = []
+    for phi in range(21):
+        for theta in range(11):
+            sphere[0].append(r*math.cos(theta*a)+cx)
+            sphere[1].append(r*math.sin(theta*a)*math.cos(phi*a)+cy)
+            sphere[2].append(r*math.sin(theta*a)*math.sin(phi*a)+cz)
+            sphere[3].append(1)
+    l = len(sphere[0])
+    for i in range(l):
+        tri = add(tri,sphere,i)
+        tri = add(tri,sphere,(i+1)%l)
+        tri = add(tri,sphere,(i+11)%l)
+        tri = add(tri,sphere,i)
+        tri = add(tri,sphere,(i+12)%l)
+        tri = add(tri,sphere,(i+11)%l)
+    #testing triangles
+    for i in range(0,l,3):
+        drawTri(tri,i)
+
 def drawTri(tri,n):
     global ematrix
     ematrix = add(ematrix,tri,n)
