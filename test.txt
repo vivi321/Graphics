@@ -1,0 +1,11 @@
+identity
+frames 1 60
+screen -4 -4 4 4
+pixels 500 500
+vary angle 360 0 1 30
+vary angle 0 360 31 60
+vary move -1 1 1 60
+box-t 1 1 1 angle 45 45 move 0 0
+render-perspective-cyclops 0 0 4
+file cyclops
+end
