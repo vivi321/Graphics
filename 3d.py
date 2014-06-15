@@ -151,12 +151,9 @@ def vary(beg,end,f1,f2):
     else:
         return False
 
-#calls vary function with values from stored command if needed
-#don't worry about the messiness
-#I was trying to make it so that things could change direction
-def animation(points, args):
+def animation(args):
     global f
-    for i in range(9):
+    for i in range(len(args)):
         try:
             args[i] = float(args[i])
         except:
@@ -175,14 +172,7 @@ def animation(points, args):
                     return False
             else:
                 return False
-    scale(args[0],args[1],args[2])
-    rotateX(args[3])
-    rotateY(args[4])
-    rotateZ(args[5])
-    move(args[6],args[7],args[8])
-    points = mult(tmatrix,points)
-    identity()
-    return points
+    return args
 
 #import
 def imp(fn, args):
@@ -201,7 +191,14 @@ def imp(fn, args):
                 if count >= 3:
                     count = 0
                     points[3].append(1)
-    points = animation(points,args)
+    args = animation(args)
+    scale(args[0],args[1],args[2])
+    rotateX(args[3])
+    rotateY(args[4])
+    rotateZ(args[5])
+    move(args[6],args[7],args[8])
+    points = mult(tmatrix,points)
+    identity()
     if not isinstance(points, bool):
         for i in range(0,len(points[0]),3):
             drawTri(points,i)
@@ -212,7 +209,14 @@ def boxT(args):
            [.5,-.5,-.5,.5,.5,-.5,-.5,.5],
            [.5,.5,.5,.5,-.5,-.5,-.5,-.5],
            [1,1,1,1,1,1,1,1]]
-    box = animation(box,args)
+    args = animation(args)
+    scale(args[0],args[1],args[2])
+    rotateX(args[3])
+    rotateY(args[4])
+    rotateZ(args[5])
+    move(args[6],args[7],args[8])
+    box = mult(tmatrix,box)
+    identity()
     if not isinstance(x,bool):
         tri = [[],[],[],[]]
         #front
@@ -271,7 +275,14 @@ def sphereT(args):
             sphere[1].append(.5*math.sin(theta*a)*math.cos(phi*a))
             sphere[2].append(.5*math.sin(theta*a)*math.sin(phi*a))
             sphere[3].append(1)
-    sphere = animation(sphere,args)
+    args = animation(args)
+    scale(args[0],args[1],args[2])
+    rotateX(args[3])
+    rotateY(args[4])
+    rotateZ(args[5])
+    move(args[6],args[7],args[8])
+    sphere = mult(tmatrix,sphere)
+    identity()
     if not isinstance(sphere,bool):
         l = len(sphere[0])
         for i in range(l):
@@ -324,24 +335,27 @@ def identity():
 #multiples a move matrix into the transformation matrix
 def move(p,q,r):
     global tmatrix
+    args = animation([p,q,r])
     a = [[1 if y==x else 0 for y in range(4)] for x in range(4)]
-    a[0][3] = p
-    a[1][3] = q
-    a[2][3] = r
+    a[0][3] = args[0]
+    a[1][3] = args[1]
+    a[2][3] = args[2]
     tmatrix = mult(a,tmatrix)
 
 #multiples a scale matrix into the transformation matrix
 def scale(p,q,r):
     global tmatrix
+    args = animation([p,q,r])
     a = [[1 if y==x else 0 for y in range(4)] for x in range(4)]
-    a[0][0] = p
-    a[1][1] = q
-    a[2][2] = r
+    a[0][0] = args[0]
+    a[1][1] = args[1]
+    a[2][2] = args[2]
     tmatrix = mult(a,tmatrix)
 
 #multiplies a rotation matrix into the transformation matrix
 def rotateX(d):
     global tmatrix
+    d = animation([d])[0]
     theta = math.radians(d)
     a = [[1 if y==x else 0 for y in range(4)] for x in range(4)]
     a[1][1] = math.cos(theta)
@@ -351,6 +365,7 @@ def rotateX(d):
     tmatrix = mult(a,tmatrix)
 def rotateY(d):
     global tmatrix
+    d = animation([d])[0]
     theta = math.radians(d)
     a = [[1 if y==x else 0 for y in range(4)] for x in range(4)]
     a[0][0] = math.cos(theta)
@@ -360,6 +375,7 @@ def rotateY(d):
     tmatrix = mult(a,tmatrix)
 def rotateZ(d):
     global tmatrix
+    d = animation([d])[0]
     theta = math.radians(d)
     a = [[1 if y==x else 0 for y in range(4)] for x in range(4)]
     a[0][0] = math.cos(theta)
@@ -444,6 +460,16 @@ def clearPixels():
 
 #writes a ppm file from the pixel array
 def File(fn):
+    F = open(fn, 'w')
+    F.write('P3\n'+str(pixelx)+" "+str(pixely)+'\n255\n')
+    for x in range(pixelx):
+        for y in range(pixely):
+            for i in range(3):
+                F.write(str(pixels[y][x][i])+' ')
+                F.write('\n')
+    F.close()
+
+def Files(fn):
     global f, frame1, frame2
     if f <= frame2 and f >= frame1:
         if f < 10:
@@ -471,9 +497,7 @@ def inputs(i):
             return "File could not be opened"
         for line in F:
             x = line.split()
-            if x[0] == '#':
-                pass
-            elif x[0] == 'end':
+            if x[0] == 'end':
                 break
             elif x[0] == 'line':
                 lines(float(x[1]),float(x[2]),float(x[3]),float(x[4]),float(x[5]),float(x[6]))
@@ -493,15 +517,15 @@ def inputs(i):
             elif x[0] == 'identity':
                 identity()
             elif x[0] == 'move':
-                move(float(x[1]),float(x[2]),float(x[3]))
+                move(x[1],x[2],x[3])
             elif x[0] == 'scale':
-                scale(float(x[1]),float(x[2]),float(x[3]))
+                scale(x[1],x[2],x[3])
             elif x[0] == 'rotate-x':
-                rotateX(float(x[1]))
+                rotateX(x[1])
             elif x[0] == 'rotate-y':
-                rotateY(float(x[1]))
+                rotateY(x[1])
             elif x[0] == 'rotate-z':
-                rotateZ(float(x[1]))
+                rotateZ(x[1])
             elif x[0] == 'vary':
                 try:
                     varies[x[1]].append([float(x[2]),float(x[3]),float(x[4]),float(x[5])])
@@ -525,8 +549,10 @@ def inputs(i):
                 clearPixels()
             elif x[0] == 'file':
                 File(x[1])
+            elif x[0] == 'files':
+                Files(x[1])
             else:
-                return "Unknown command"
+                pass
         F.close()
         clearEdges()
         clearPixels()
